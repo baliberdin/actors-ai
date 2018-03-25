@@ -26,7 +26,7 @@ public abstract class TimeLapseUniverse extends Universe {
 		while(times > 0) {
 			System.out.println("TimeLapseUniverse time: "+times);
 			for(Actor actor: actors) {
-				System.out.println("Actor: "+actor);
+				//System.out.println("Actor: "+actor);
 				if(actor instanceof TimeLapseActor) {
 					TimeLapseActor tla = (TimeLapseActor) actor;
 					//tla.startNextAction();

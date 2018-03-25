@@ -25,8 +25,8 @@ public class App
 			EnergyLevelSensor energy = new EnergyLevelSensor();
 			particle.addSensor(energy);
 			
-			PainSensor pain = new PainSensor();
-			particle.addSensor(pain);
+			//PainSensor pain = new PainSensor();
+			//particle.addSensor(pain);
 			
 			universe.addActor(particle);
 		}
@@ -36,7 +36,7 @@ public class App
 		System.out.println("\nResults\n");
 		for(Actor actor: universe.getActors()) {
 			ParticleActor a = (ParticleActor) actor;
-			System.out.println(actor.getName()+" - "+ a.getFeelings() + " - "+a.getIterations());
+			System.out.println(actor.getName()+" - "+ a.getFeelings().firstElement() + " - "+a.getIterations());
 		}
 	}
 }

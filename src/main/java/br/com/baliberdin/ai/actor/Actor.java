@@ -60,7 +60,7 @@ public abstract class Actor extends Thread {
 			}
 
 			thinkAbout();
-		}
+		};
 	}
 
 	public boolean isLive() {

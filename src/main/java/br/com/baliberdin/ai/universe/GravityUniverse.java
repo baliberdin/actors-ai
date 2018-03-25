@@ -16,9 +16,9 @@ public class GravityUniverse extends TimeLapseUniverse {
 
 	@Override
 	public void thinkAbout(TimeLapseActor a) {
-		
+
 		if(a.getFeelings().size() > 0) {
-			System.out.println("Thinking...");
+			//System.out.println("Thinking...");
 			
 			if(a.getFeelings().size() > 0) {
 				Object obj = a.getFeelings().firstElement();
@@ -34,6 +34,7 @@ public class GravityUniverse extends TimeLapseUniverse {
 //				}
 			}
 		}
+
 	}
 
 }
