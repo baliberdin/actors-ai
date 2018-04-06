@@ -3,6 +3,7 @@ package br.com.baliberdin.ai.universe;
 import br.com.baliberdin.ai.actor.Actor;
 import br.com.baliberdin.ai.actor.TimeLapseActor;
 
+
 public abstract class TimeLapseUniverse extends Universe {
 	
 	private Integer times;
@@ -26,14 +27,23 @@ public abstract class TimeLapseUniverse extends Universe {
 		while(times > 0) {
 			System.out.println("TimeLapseUniverse time: "+times);
 			for(Actor actor: actors) {
-				//System.out.println("Actor: "+actor);
-				if(actor instanceof TimeLapseActor) {
-					TimeLapseActor tla = (TimeLapseActor) actor;
-					//tla.startNextAction();
-					//Universe thinks about each actor 
-					thinkAbout(tla);
-				}else {
-					System.out.println(actor.getName()+" is an Invalid Actor. TimeLapseUniverse require TimeLapseActors.");
+
+				try {
+					actor.getLock().acquire();
+
+					//System.out.println("Actor: "+actor);
+					if(actor instanceof TimeLapseActor) {
+						TimeLapseActor tla = (TimeLapseActor) actor;
+						//tla.startNextAction();
+						//Universe thinks about each actor
+						thinkAbout(tla);
+					}else {
+						System.out.println(actor.getName()+" is an Invalid Actor. TimeLapseUniverse require TimeLapseActors.");
+					}
+
+					actor.getLock().release();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 			

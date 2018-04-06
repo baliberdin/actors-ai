@@ -3,6 +3,8 @@ package br.com.baliberdin.ai.actor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.locks.Lock;
 
 import br.com.baliberdin.ai.sensor.Sensor;
 
@@ -11,9 +13,10 @@ public abstract class Actor extends Thread {
 	private Long id;
 	protected List<Sensor> sensors = new ArrayList<Sensor>();
 	protected List<Action> actions = new ArrayList<Action>();
+	protected Semaphore lock;
 
 	// Intelligence
-	private boolean live;
+	protected boolean live;
 
 	// It is no able to register memories, then we have only one register of actual feeling
 	protected Vector<Object> feelings = new Vector<Object>();
@@ -21,6 +24,7 @@ public abstract class Actor extends Thread {
 	public Actor(Long id) {
 		this.id = id;
 		live = true;
+		this.lock = new Semaphore(1);
 	}
 
 	public long getId() {
@@ -48,19 +52,24 @@ public abstract class Actor extends Thread {
 	}
 
 	public  void run() {
-		//StringBuffer str = new StringBuffer();
-		//str.append(this.getName()+" - Sensors:"+getSensors().size()+" - Actions:"+getActions().size()+"\n");
-		//System.out.println(str.toString());
 
 		while(live) {
-			feelings.clear();
-			for(Sensor sensor: sensors) {
-				sensor.acquireValue();
-				feelings.add(sensor.getValue());
-			}
+			try {
+				lock.acquire();
 
-			thinkAbout();
-		};
+				feelings.clear();
+				for(Sensor sensor: sensors) {
+					sensor.acquireValue();
+					feelings.add(sensor.getValue());
+				}
+
+				thinkAbout();
+
+				lock.release();
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public boolean isLive() {
@@ -72,5 +81,9 @@ public abstract class Actor extends Thread {
 	}
 
 	public abstract void thinkAbout();
+
+	public Semaphore getLock(){
+		return lock;
+	}
 
 }

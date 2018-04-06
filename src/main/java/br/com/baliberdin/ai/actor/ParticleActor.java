@@ -11,12 +11,10 @@ public class ParticleActor extends TimeLapseActor {
 
 	@Override
 	public void thinkAbout() {
-		i++;
+
 		//System.out.println(this.getName()+" is thinking..."+feelings.toString()+" | "+i);
 	}
 	
-	public Long getIterations() {
-		return i;
-	}
+
 
 }

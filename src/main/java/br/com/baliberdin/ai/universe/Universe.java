@@ -17,12 +17,7 @@ public abstract class Universe {
 	
 	public void start() {
 		for(Actor a : actors) {
-			try {
-				a.join();
-				a.start();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			a.start();
 		}
 	}
 

@@ -16,7 +16,7 @@ public class EnergyLevelSensor extends InstinctSensor {
 	@Override
 	public void acquireValue() {
 		// A fake energy lost
-		energy = energy - 0.001D;
+		energy -= 0.001D;
 		if(energy < 0D)energy = 0D;
 		
 		//TODO acquire real energy;
